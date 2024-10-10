@@ -16,10 +16,6 @@ public class TodoQueryRepositoryImpl implements TodoQueryRepository {
 
     private final JPAQueryFactory queryFactory;
 
-//    public TodoQueryRepositoryImpl(JPAQueryFactory queryFactory) {
-//        this.queryFactory = queryFactory;
-//    }
-
     @Override
     public Optional<Todo> findByIdWithUser(Long todoId) {
 
