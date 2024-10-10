@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -19,9 +20,11 @@ public class WeatherClient {
     private final RestTemplate restTemplate;
 
     public WeatherClient(RestTemplateBuilder builder) {
-        this.restTemplate = builder.build();
+        this.restTemplate = builder
+                .setConnectTimeout(Duration.ofSeconds(5))  // 연결 타임아웃
+                .setReadTimeout(Duration.ofSeconds(5))      // 읽기 타임아웃 (외부 API와의 통신에 대해서 타임아웃 설정과 에러 핸들링을 설정)
+                .build();
     }
-
     public String getTodayWeather() {
         ResponseEntity<WeatherDto[]> responseEntity =
                 restTemplate.getForEntity(buildWeatherApiUri(), WeatherDto[].class);
